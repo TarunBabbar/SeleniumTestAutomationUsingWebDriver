@@ -65,12 +65,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AssemblySetUp.cs" />
     <Compile Include="GoogleSearch.cs" />
+    <Compile Include="GoogleSearchWithMultipleBrowsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeleniumDriver\Enums.cs" />
+    <Compile Include="SeleniumDriver\WebDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
