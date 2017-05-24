@@ -40,11 +40,12 @@ Below piece of code help you achieve this:
 
 <span class="figcaption_hack">Code to launch IE and do google search using Selenium Web Driver.</span>
 
-See how easy it is !!
+See how easy it is !! Please have a look at the entire source code at my
+[github](https://github.com/TarunBabbar/SeleniumTestAutomationUsingWebDriver)
+link.
 
 * [Selenium](https://medium.com/tag/selenium?source=post)
 * [Csharp](https://medium.com/tag/csharp?source=post)
 * [Visual Studio](https://medium.com/tag/visual-studio?source=post)
 
 ### [Tarun Babbar](https://medium.com/@IamTarunBabbar)
-
