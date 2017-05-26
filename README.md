@@ -49,3 +49,39 @@ link.
 * [Visual Studio](https://medium.com/tag/visual-studio?source=post)
 
 ### [Tarun Babbar](https://medium.com/@IamTarunBabbar)
+
+
+# Selenium Web Driver UI Automation on Multiple Browsers
+
+I hope you have gone through my first story on Selenium Driver published
+[here,](https://medium.com/@IamTarunBabbar/test-automation-using-c-selenium-web-driver-c195c3d4c273)
+where I talked about how to create your first ui automation test case using
+selenium driver and C#. Here, I am going little further to talk about how to do
+testing across multiple browsers. If you haven’t yet visited, please do visit
+[this](https://medium.com/@IamTarunBabbar/test-automation-using-c-selenium-web-driver-c195c3d4c273)
+link to get initial idea on Selenium Web Driver.
+
+An application is always opened on different browsers — Chrome, IE, Firefox,
+Safari, etc. Selenium web driver is supported for all these browsers. To verify
+behavior across browsers, Selenium has provided an easy mechanism to instantiate
+any of Chrome/FF/IE browsers. You can use the below piece of code which would
+help you achieve the same. Comparing with code I shown in my previous article,
+here I created a separate class named WebDriver, where I am initializing
+instance for webdriver, as per the instance required.
+
+![](https://cdn-images-1.medium.com/max/800/1*6Lx4Z3eS7_8w5NCawqk28w.png)
+<span class="figcaption_hack">Initiate one instance of webdriver pointing to corresponding Browser.</span>
+
+I have an enum where I am storing all the browser types as below:
+
+![](https://cdn-images-1.medium.com/max/800/1*KWU3KiD8EwbZeaxSNpvH_g.png)
+
+![](https://cdn-images-1.medium.com/max/800/1*BiQsgHJ598F7ax6oqSxUWQ.png)
+<span class="figcaption_hack">Launching browsers for each Browsers enum</span>
+
+I’m really loving it guys, so easy with Selenium driver !!
+
+Source code is placed
+[here](https://github.com/TarunBabbar/SeleniumTestAutomationUsingWebDriver).
+
+### [Tarun Babbar](https://medium.com/@IamTarunBabbar)
