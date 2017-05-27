@@ -17,7 +17,7 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
     {
         private static IWebDriver webDriver = null;
 
-        public static IWebDriver Driver {get { return webDriver; } set { webDriver = null; } }
+        public static IWebDriver Driver { get { return webDriver; } set { webDriver = null; } }
 
 
         private static IWebDriver CreateDriver(Browsers browser)
@@ -111,6 +111,15 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
             {
                 throw new Exception(ex.InnerException.ToString());
             }
+        }
+
+        public void DrawHighlight(IWebElement elementToHighlight)
+        {
+            var jsDriver = (IJavaScriptExecutor)webDriver;
+            string highlightJavascript =
+                @"arguments[0].style.cssText = ""border-width: 2px; border-style: solid; border-color: red"";";
+            jsDriver.ExecuteScript(highlightJavascript, new object[] { elementToHighlight });
+
         }
     }
 }

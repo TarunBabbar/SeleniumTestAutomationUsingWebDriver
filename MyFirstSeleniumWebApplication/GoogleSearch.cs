@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium;
@@ -31,6 +32,8 @@ namespace MyFirstSeleniumWebApplication
             googleSearchTextBox.SendKeys("https://medium.com/");
             IWebElement googleSearchButton = webDriver.FindElement(By.Id("_fZl"));
             googleSearchButton.Click();
+
+            ReadOnlyCollection<IWebElement> paginationLinksOnGoogleSearch = webDriver.FindElements(By.TagName("td"));
         }
     }
 }

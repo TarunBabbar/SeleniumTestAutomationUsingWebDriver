@@ -8,8 +8,8 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
 {
     public enum Browsers
     {
-        InternetExplorer=0,
-        Firefox=1,
-        Chrome=2
+        InternetExplorer = 0,
+        Firefox = 1,
+        Chrome = 2
     }
 }

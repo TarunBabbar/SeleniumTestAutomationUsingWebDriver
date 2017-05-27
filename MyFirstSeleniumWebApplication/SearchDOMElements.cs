@@ -26,6 +26,7 @@ namespace MyFirstSeleniumWebApplication
 
             // Identifying DOM element with class name doesn't have space
             IWebElement mediumLogo = WebDriver.Driver.FindElement(By.ClassName("siteNav-logo"));
+            WebDriver.DrawHighlight(mediumLogo);
             Assert.IsTrue(mediumLogo.Enabled);
         }
 
@@ -37,8 +38,22 @@ namespace MyFirstSeleniumWebApplication
 
             // Class name for 'write a story' link is button button--chromeless u-baseColor--buttonNormal is-inSiteNavBar u-sm-hide u-marginRight15 u-lineHeight30 u-height32 is-touched but we are using sub-part of this classname here:
             IWebElement writeAStoryLink =
+                WebDriver.Driver.FindElement(By.XPath("//*[contains(@class, '" + "is-inSiteNavBar u-sm-hide" + "')]"));
+            WebDriver.DrawHighlight(writeAStoryLink);
+            writeAStoryLink.Click();
+        }
+
+        [TestMethod]
+        [Description("Identifying DOM element with ID not exact Id mentiond on UI Portal")]
+        public void SearchDOMElementContainsId()
+        {
+            WebDriver.Driver.Navigate().GoToUrl("https://medium.com");
+
+            // Class name for 'write a story' link is button button--chromeless u-baseColor--buttonNormal is-inSiteNavBar u-sm-hide u-marginRight15 u-lineHeight30 u-height32 is-touched but we are using sub-part of this classname here:
+            IWebElement writeAStoryLink =
                 WebDriver.Driver.FindElement(By.XPath("//*[contains(@class, '" + "is-inSiteNavBar u-sm-hide" + "')]")
                 );
+            WebDriver.DrawHighlight(writeAStoryLink);
 
             writeAStoryLink.Click();
         }
