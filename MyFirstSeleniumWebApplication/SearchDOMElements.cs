@@ -49,7 +49,21 @@ namespace MyFirstSeleniumWebApplication
         {
             WebDriver.Driver.Navigate().GoToUrl("https://medium.com");
 
+            // This will not work, as, Selenium is not able to parse class name with so many spaces
+            try
+            {
+                IWebElement writeAStoryLinkEntireClassName =
+                    WebDriver.Driver.FindElement(
+                        By.ClassName(
+                            "button button--chromeless u-baseColor--buttonNormal is-inSiteNavBar u-sm-hide u-marginRight15 u-lineHeight30 u-height32 is-touched"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
             // Class name for 'write a story' link is button button--chromeless u-baseColor--buttonNormal is-inSiteNavBar u-sm-hide u-marginRight15 u-lineHeight30 u-height32 is-touched but we are using sub-part of this classname here:
+            // This will work as selenium is able to parse on space in class name
             IWebElement writeAStoryLink =
                 WebDriver.Driver.FindElement(By.XPath("//*[contains(@class, '" + "is-inSiteNavBar u-sm-hide" + "')]")
                 );

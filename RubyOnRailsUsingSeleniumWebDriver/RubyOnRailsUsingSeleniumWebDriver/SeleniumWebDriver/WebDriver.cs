@@ -1,30 +1,31 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Support.UI;
+using RubyOnRailsUsingSeleniumWebDriver.Initialization;
 
-namespace MyFirstSeleniumWebApplication.SeleniumDriver
+namespace Samples.Tests.SeleniumWebDriver
 {
     public class WebDriver
     {
         private static IWebDriver webDriver = null;
 
-        public static IWebDriver Driver { get { return webDriver; } set { webDriver = value; } }
-
+        public IWebDriver Driver
+        {
+            get { return webDriver; }
+            set { webDriver = value; }
+        }
 
         private static IWebDriver CreateDriver(Browsers browser)
         {
             switch (browser)
             {
                 case Browsers.Firefox:
+                    Logger.Comment(LogType.Information, "Initializing Firefox browser");
                     if (webDriver == null)
                     {
                         FirefoxDriverService service =
@@ -36,14 +37,15 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
                 case Browsers.InternetExplorer:
                     if (webDriver == null)
                     {
-                        InternetExplorerOptions options = new InternetExplorerOptions
+                        Logger.Comment(LogType.Information, "Initializing Internet Explorer browser");
+                        InternetExplorerOptions opt = new InternetExplorerOptions
                         {
                             EnableNativeEvents = true,
                             IgnoreZoomLevel = true,
                             IntroduceInstabilityByIgnoringProtectedModeSettings = true,
                         };
 
-                        webDriver = new InternetExplorerDriver(options);
+                        webDriver = new InternetExplorerDriver(opt);
                     }
                     break;
                 case Browsers.Chrome:
@@ -57,6 +59,8 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
                     }
                     break;
                 default:
+                    Logger.Comment(LogType.Warning,
+                        "Could not recognize the browser, Launching Chrome as default browser instead.");
                     goto case Browsers.Chrome;
             }
             return webDriver;
@@ -68,20 +72,23 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
             {
                 if (webDriver == null) return;
                 webDriver.Manage().Cookies.DeleteAllCookies();
-                ProcessStartInfo psInfo = new ProcessStartInfo();
-                psInfo.FileName = Path.Combine(Environment.SystemDirectory, "RunDll32.exe");
-                psInfo.Arguments = "InetCpl.cpl,ClearMyTracksByProcess 2";
-                psInfo.CreateNoWindow = true;
-                psInfo.UseShellExecute = false;
-                psInfo.RedirectStandardError = true;
-                psInfo.RedirectStandardOutput = true;
+                ProcessStartInfo psInfo =
+                    new ProcessStartInfo
+                    {
+                        FileName = Path.Combine(Environment.SystemDirectory, "RunDll32.exe"),
+                        Arguments = "InetCpl.cpl,ClearMyTracksByProcess 2",
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        RedirectStandardError = true,
+                        RedirectStandardOutput = true
+                    };
                 Process p = new Process { StartInfo = psInfo };
                 p.Start();
                 p.WaitForExit(10000);
             }
             catch (Exception e)
             {
-                throw new Exception(e.InnerException.ToString());
+                Logger.Comment(LogType.Error, e.Message);
             }
         }
 
@@ -109,17 +116,27 @@ namespace MyFirstSeleniumWebApplication.SeleniumDriver
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.InnerException.ToString());
+                Logger.Comment(LogType.Error, ex.Message);
             }
         }
 
-        public void DrawHighlight(IWebElement elementToHighlight)
+        public void QuitAndCloseWebDriver()
         {
-            var jsDriver = (IJavaScriptExecutor)webDriver;
-            string highlightJavascript =
-                @"arguments[0].style.cssText = ""border-width: 2px; border-style: solid; border-color: red"";";
-            jsDriver.ExecuteScript(highlightJavascript, new object[] { elementToHighlight });
+            webDriver.Close();
+            webDriver.Quit();
+        }
 
+        public void Navigate(string url)
+        {
+            webDriver.Navigate().GoToUrl(url);
+            WaitTillPageIsLoaded();
+        }
+
+        public void WaitTillPageIsLoaded()
+        {
+            IWait<IWebDriver> wait = new OpenQA.Selenium.Support.UI.WebDriverWait(webDriver, TimeSpan.FromSeconds(60.00));
+            wait.Until(
+                driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
         }
     }
 }
